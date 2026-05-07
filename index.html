@@ -88,19 +88,43 @@
       showTestRequest: true,
       servers: [{ url: 'https://haklay-api-441658416213.us-central1.run.app' }],
       customCss: `
-        :root {
-          --scalar-font: 'Noto Sans', sans-serif !important;
-          --scalar-color-1: #0F2132 !important;
-          --scalar-color-accent: #E8BA38 !important;
-          --scalar-button-1: #E8BA38 !important;
-          --scalar-color-get: #E8BA38 !important;
-        }
-        .p-method-get, .endpoint-path, .scalar-api-reference .code-block, .scalar-api-reference .curl {
-          color: #E8BA38 !important;
-        }
-        /* Remove o título duplicado que o Scalar injeta */
-        .section-header { display: none; } 
-      `
+          :root {
+            --scalar-font: 'Noto Sans', sans-serif !important;
+            --scalar-color-1: #0F2132 !important;
+            --scalar-color-accent: #E8BA38 !important;
+            --scalar-button-1: #E8BA38 !important;
+        
+            /* Atributos principais para o GET */
+            --scalar-color-get: #E8BA38 !important;
+            --scalar-background-get: rgba(232, 186, 56, 0.1) !important;
+          }
+        
+          /* Força a cor amarela no texto do badge GET na sidebar e no painel central */
+          .p-method-get, 
+          .method-get,
+          [data-method="get"] {
+            color: #E8BA38 !important;
+          }
+        
+          /* Se o badge for uma pílula com fundo, ajusta a borda ou detalhes */
+          .scalar-api-reference .method-get {
+            color: #E8BA38 !important;
+          }
+
+  /* Garante que o caminho da URL também fique amarelo */
+  .endpoint-path {
+    color: #E8BA38 !important;
+  }
+
+  /* Ajusta a cor do texto nos blocos de código/cURL */
+  .scalar-api-reference .code-block, 
+  .scalar-api-reference .curl {
+    color: #E8BA38 !important;
+  }
+
+  /* Remove o título duplicado do Scalar */
+  .section-header { display: none; } 
+`
     }
     document.getElementById('api-reference').dataset.configuration = JSON.stringify(configuration);
   </script>
