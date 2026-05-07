@@ -6,7 +6,6 @@
   <title>Haklay API Docs</title>
 
   <style>
-    /* 1. FONTES E RESET */
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
 
     body {
@@ -15,7 +14,6 @@
       font-family: 'Noto Sans', sans-serif !important;
     }
 
-    /* 2. HEADER DA LOGO (Customizado) */
     #haklay-header {
       display: flex;
       justify-content: center;
@@ -32,10 +30,8 @@
       width: auto; 
     }
 
-    /* Esconde elementos nativos do Scalar que podem conflitar */
-    .scalar-app header, [class*="ScalarHeader"] {
-      display: none !important;
-    }
+    /* Ajuste para não esconder o botão de Try-out caso ele use classes similares */
+    .scalar-app header { display: none !important; }
   </style>
 </head>
 
@@ -50,9 +46,14 @@
   ></script>
 
   <script>
-    /* 3. CONFIGURAÇÃO DO SCALAR */
     const configuration = {
       theme: 'light',
+      // Força a exibição do botão de teste (Try-out)
+      showTestRequest: true, 
+      // Opcional: Define o servidor padrão caso o JSON tenha múltiplos
+      servers: [
+        { url: 'https://haklay-api-441658416213.us-central1.run.app' }
+      ],
       customCss: `
         :root {
           --scalar-font: 'Noto Sans', sans-serif !important;
