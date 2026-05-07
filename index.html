@@ -12,42 +12,69 @@
       margin: 0;
       padding: 0;
       font-family: 'Noto Sans', sans-serif !important;
+      background-color: #fff;
     }
 
     /* HEADER */
     #haklay-header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 15px 0;
       background-color: #0F2132;
-      width: 100%;
+      padding: 20px 0;
+      text-align: center;
       position: sticky;
       top: 0;
       z-index: 1000;
     }
-    #haklay-header img { max-height: 40px; width: auto; }
+    #haklay-header img { max-height: 45px; }
 
-    /* 2. TRADUÇÃO "INTRODUCTION" -> "INTRODUÇÃO" NA SIDEBAR */
-    /* Esse seletor ataca especificamente o item de introdução do Scalar */
-    .sidebar-group-item[data-id="introduction"] .sidebar-group-item__label,
-    button[id="v-0-introduction-0"] span {
+    /* CONTAINER DA DESCRIÇÃO MANUAL */
+    .intro-container {
+      max-width: 800px;
+      margin: 40px auto 0 300px; /* Alinhado para não bater na sidebar */
+      padding: 0 40px;
+      color: #0F2132;
+    }
+    .intro-container h2 { 
+      color: #0F2132; 
+      border-left: 5px solid #E8BA38; 
+      padding-left: 15px;
+      margin-bottom: 20px;
+    }
+    .intro-container p { font-size: 16px; line-height: 1.6; }
+    .intro-container ul { list-style: none; padding: 0; }
+    .intro-container li { margin-bottom: 10px; }
+    .intro-container li strong { color: #E8BA38; }
+
+    /* TRADUÇÃO DA SIDEBAR */
+    .sidebar-group-item[data-id="introduction"] .sidebar-group-item__label {
       display: none !important;
     }
     .sidebar-group-item[data-id="introduction"]::after {
       content: "Introdução";
       padding-left: 12px;
       font-size: 14px;
-      color: var(--scalar-color-1);
     }
 
     .scalar-app header { display: none !important; }
+
+    /* Ajuste responsivo para a descrição */
+    @media (max-width: 1000px) {
+      .intro-container { margin-left: auto; padding: 20px; }
+    }
   </style>
 </head>
 
 <body>
   <div id="haklay-header">
     <img id="logo-img" alt="Haklay Logo" src="haklay_logo_branco.png">
+  </div>
+
+  <div class="intro-container">
+    <h2>Ecossistema de Crédito Rural Inteligente</h2>
+    <p>A Haklay API fornece acesso simplificado a indicadores críticos para o agronegócio. Através desta interface, você pode validar:</p>
+    <ul>
+      <li><strong>• Score de Crédito:</strong> Análise de risco baseada em comportamento financeiro.</li>
+      <li><strong>• Conformidade Ambiental:</strong> Verificação de embargos e restrições socioambientais.</li>
+    </ul>
   </div>
 
   <script
@@ -59,40 +86,22 @@
     const configuration = {
       theme: 'light',
       showTestRequest: true,
-      // 3. TEXTO INTRODUTÓRIO MELHORADO
-      description: `
-## Ecossistema de Crédito Rural Inteligente
-A Haklay API fornece acesso simplificado a indicadores críticos para o agronegócio. 
-Através desta interface, você pode validar:
-* **Score de Crédito**: Análise de risco baseada em comportamento financeiro.
-* **Conformidade Ambiental**: Verificação de embargos e restrições socioambientais.
-      `,
       servers: [{ url: 'https://haklay-api-441658416213.us-central1.run.app' }],
       customCss: `
         :root {
           --scalar-font: 'Noto Sans', sans-serif !important;
           --scalar-color-1: #0F2132 !important;
-          --scalar-color-2: rgba(15, 33, 50, 0.6) !important;
           --scalar-color-accent: #E8BA38 !important;
           --scalar-button-1: #E8BA38 !important;
-          /* 1. COR DO MÉTODO GET NA SIDEBAR */
           --scalar-color-get: #E8BA38 !important;
         }
-
-        /* Cor do GET e cURL na área de teste (preta) */
         .p-method-get, .endpoint-path, .scalar-api-reference .code-block, .scalar-api-reference .curl {
           color: #E8BA38 !important;
         }
-        
-        /* Ajuste para o texto não ficar cinza no fundo escuro */
-        .scalar-api-reference .code-block span {
-          color: inherit;
-        }
-
-        b, strong, h1, h2 { font-weight: 700 !important; }
+        /* Remove o título duplicado que o Scalar injeta */
+        .section-header { display: none; } 
       `
     }
-
     document.getElementById('api-reference').dataset.configuration = JSON.stringify(configuration);
   </script>
 
