@@ -1,77 +1,104 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Haklay API Docs</title>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Haklay API Docs</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+    <style>
+      body { margin: 0; padding: 0; }
 
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Noto Sans', sans-serif !important;
-    }
+      /* 1. HEADER PARA IDENTIDADE VISUAL */
+      #haklay-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px 0;
+        background-color: #0F2132;
+        width: 100%;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      #haklay-header img { max-height: 40px; width: auto; }
 
-    #haklay-header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 15px 0;
-      background-color: #0F2132;
-      width: 100%;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    #haklay-header img { 
-      max-height: 40px; 
-      width: auto; 
-    }
+      /* 2. CUSTOMIZAÇÃO DE CORES (GET e TEXTOS TÉCNICOS) */
+      /* Muda a cor do fundo do badge GET */
+      .hook-label-get { 
+        background-color: #E8BA38 !important; 
+        color: #0F2132 !important; 
+        font-weight: bold !important;
+      }
 
-    /* Ajuste para não esconder o botão de Try-out caso ele use classes similares */
-    .scalar-app header { display: none !important; }
-  </style>
-</head>
+      /* Cor do caminho (path) do endpoint */
+      .operation-endpoint-path { 
+        color: #E8BA38 !important; 
+      }
 
-<body>
-  <div id="haklay-header">
-    <img id="logo-img" alt="Haklay Logo" src="haklay_logo_branco.png">
-  </div>
+      /* 3. TRADUÇÃO DE "INTRODUCTION" NA SIDEBAR */
+      /* Localiza o item de menu pelo título e substitui o texto */
+      span[title="Introduction"], 
+      li[data-item-id="section/Introduction"] > label {
+        font-size: 0 !important;
+      }
+      span[title="Introduction"]::before,
+      li[data-item-id="section/Introduction"] > label::before {
+        content: "Introdução";
+        font-size: 14px !important;
+        font-weight: 600;
+      }
 
-  <script
-    id="api-reference"
-    data-url="https://haklay-api-441658416213.us-central1.run.app/openapi.json"
-  ></script>
+      /* Ajuste fino na área preta (painel da direita) */
+      .redoc-controls-vp {
+        background-color: #0F2132 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="haklay-header">
+      <img src="haklay_logo_branco.png" alt="Haklay Logo">
+    </div>
 
-  <script>
-    const configuration = {
-      theme: 'light',
-      // Força a exibição do botão de teste (Try-out)
-      showTestRequest: true, 
-      // Opcional: Define o servidor padrão caso o JSON tenha múltiplos
-      servers: [
-        { url: 'https://haklay-api-441658416213.us-central1.run.app' }
-      ],
-      customCss: `
-        :root {
-          --scalar-font: 'Noto Sans', sans-serif !important;
-          --scalar-color-1: #0F2132 !important;
-          --scalar-color-2: rgba(15, 33, 50, 0.6) !important;
-          --scalar-color-accent: #E8BA38 !important;
-          --scalar-button-1: #E8BA38 !important;
-        }
-        .p-method-get, .endpoint-path, .scalar-api-reference .code-block, .scalar-api-reference .curl {
-          color: #E8BA38 !important;
-        }
-        b, strong, h1, h2 { font-weight: 700 !important; }
-      `
-    }
+    <div id="redoc-container"></div>
 
-    document.getElementById('api-reference').dataset.configuration = JSON.stringify(configuration);
-  </script>
+    <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
-</body>
+    <script>
+      Redoc.init(
+        'https://haklay-api-441658416213.us-central1.run.app/openapi.json', 
+        {
+          // Desativa o Hostname para o layout ficar mais limpo
+          hideHostname: true,
+          // Configurações de Tema (Onde a mágica acontece)
+          theme: {
+            colors: {
+              primary: {
+                main: '#0F2132' // Cor principal (títulos e links)
+              },
+              success: {
+                main: '#E8BA38' // Cor que o Redoc usa para o método GET
+              },
+              text: {
+                primary: '#0F2132'
+              }
+            },
+            typography: {
+              fontFamily: 'Noto Sans, sans-serif',
+              headings: {
+                fontFamily: 'Noto Sans, sans-serif',
+                fontWeight: '700'
+              }
+            },
+            rightPanel: {
+              backgroundColor: '#112231', // Tom azul escuro/preto da Haklay
+              textColor: '#ffffff',
+              width: '40%'
+            }
+          }
+        }, 
+        document.getElementById('redoc-container')
+      );
+    </script>
+  </body>
 </html>
