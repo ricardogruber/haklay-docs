@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/redoc-try-it-out/dist/try-it-out.min.js"></script>
+    <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
     <style>
       body { margin: 0; padding: 0; }
       #haklay-header {
@@ -25,36 +26,45 @@
     </div>
 
     <div id="redoc-container"></div>
-
-    <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
+  
     <script>
-      // Função para carregar a API e garantir a versão correta para o Try-it-out
-      fetch('https://haklay-api-441658416213.us-central1.run.app/openapi.json')
-        .then(response => response.json())
-        .then(spec => {
-          // Ajuste técnico: O Redoc Try-it-out prefere ler 3.0.0 em vez de 3.1.0 para compatibilidade
-          if (spec.openapi === '3.1.0') {
-            spec.openapi = '3.0.0';
-          }
-    
-          RedocTryItOut.init(
-            spec, // Passamos o objeto da API modificado aqui
-            {
-              theme: {
-                colors: {
-                  primary: { main: '#E8BA38' },
-                  text: { primary: '#0F2132' }
-                },
-                typography: {
-                  fontFamily: 'Noto Sans, sans-serif',
-                  headings: { fontFamily: 'Noto Sans, sans-serif', fontWeight: '700' }
-                }
-              }
+    // 1. Baixamos o JSON da sua API
+    fetch('https://haklay-api-441658416213.us-central1.run.app/openapi.json')
+      .then(response => response.json())
+      .then(spec => {
+        
+        // 2. Ajuste de compatibilidade para o motor de testes
+        if (spec.openapi && spec.openapi.startsWith('3.1')) {
+          spec.openapi = '3.0.0';
+        }
+  
+        // 3. Configurações de tema (suas cores mantidas)
+        const redocOptions = {
+          theme: {
+            colors: {
+              primary: { main: '#E8BA38' },
+              text: { primary: '#0F2132' }
             },
-            document.getElementById('redoc-container')
-          );
-        })
-        .catch(err => console.error('Erro ao carregar a API:', err));
-    </script>
+            typography: {
+              fontFamily: 'Noto Sans, sans-serif',
+              headings: { fontFamily: 'Noto Sans, sans-serif', fontWeight: '700' }
+            }
+          }
+        };
+  
+        // 4. Inicialização com garantia de renderização
+        RedocTryItOut.init(
+          spec,
+          redocOptions,
+          document.getElementById('redoc-container'),
+          () => {
+            console.log('Redoc Try-it-out carregado com sucesso!');
+          }
+        );
+      })
+      .catch(err => {
+        console.error('Erro crítico ao carregar documentação:', err);
+      });
+  </script>
   </body>
 </html>
