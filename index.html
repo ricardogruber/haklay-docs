@@ -5,6 +5,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/redoc-try-it-out/dist/try-it-out.min.js"></script>
     <style>
       body { margin: 0; padding: 0; }
       #haklay-header {
@@ -27,9 +28,11 @@
 
     <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
     <script>
-      Redoc.init(
+      // Em vez de Redoc.init, usamos RedocTryItOut.init
+      RedocTryItOut.init(
         'https://haklay-api-441658416213.us-central1.run.app/openapi.json',
         {
+          // Suas configurações de tema continuam aqui
           theme: {
             colors: {
               primary: { main: '#E8BA38' },
