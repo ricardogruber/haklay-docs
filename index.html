@@ -82,13 +82,13 @@
     data-url="https://haklay-api-441658416213.us-central1.run.app/openapi.json"
   ></script>
 
-  <script>
+ <script>
     const configuration = {
       theme: 'light',
       showTestRequest: true,
-      // ADICIONADO: Configura explicitamente como o Scalar deve tratar a segurança
+      // Força o Scalar a abrir o gerenciador de autenticação nos endpoints protegidos
       authentication: {
-        preferredSecurityScheme: 'OAuth2', // Força o uso do fluxo do cadeado
+        preferredSecurityScheme: 'OAuth2PasswordBearer',
       },
       servers: [{ url: 'https://haklay-api-441658416213.us-central1.run.app' }],
       customCss: `
@@ -97,36 +97,13 @@
             --scalar-color-1: #0F2132 !important;
             --scalar-color-accent: #E8BA38 !important;
             --scalar-button-1: #E8BA38 !important;
-        
-            /* Atributos principais para o GET */
             --scalar-color-get: #E8BA38 !important;
             --scalar-background-get: rgba(232, 186, 56, 0.1) !important;
           }
-        
-          /* Força a cor amarela no texto do badge GET na sidebar e no painel central */
-          .p-method-get, 
-          .method-get,
-          [data-method="get"] {
-            color: #E8BA38 !important;
-          }
-        
-          /* Se o badge for uma pílula com fundo, ajusta a borda ou detalhes */
-          .scalar-api-reference .method-get {
-            color: #E8BA38 !important;
-          }
-
-          /* Garante que o caminho da URL também fique amarelo */
-          .endpoint-path {
-            color: #E8BA38 !important;
-          }
-
-          /* Ajusta a cor do texto nos blocos de código/cURL */
-          .scalar-api-reference .code-block, 
-          .scalar-api-reference .curl {
-            color: #E8BA38 !important;
-          }
-
-          /* Remove o título duplicado do Scalar */
+          .p-method-get, .method-get, [data-method="get"] { color: #E8BA38 !important; }
+          .scalar-api-reference .method-get { color: #E8BA38 !important; }
+          .endpoint-path { color: #E8BA38 !important; }
+          .scalar-api-reference .code-block, .scalar-api-reference .curl { color: #E8BA38 !important; }
           .section-header { display: none; } 
       `
     }
