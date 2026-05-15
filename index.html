@@ -86,6 +86,10 @@
     const configuration = {
       theme: 'light',
       showTestRequest: true,
+      // ADICIONADO: Configura explicitamente como o Scalar deve tratar a segurança
+      authentication: {
+        preferredSecurityScheme: 'OAuth2', // Força o uso do fluxo do cadeado
+      },
       servers: [{ url: 'https://haklay-api-441658416213.us-central1.run.app' }],
       customCss: `
           :root {
@@ -111,24 +115,24 @@
             color: #E8BA38 !important;
           }
 
-  /* Garante que o caminho da URL também fique amarelo */
-  .endpoint-path {
-    color: #E8BA38 !important;
-  }
+          /* Garante que o caminho da URL também fique amarelo */
+          .endpoint-path {
+            color: #E8BA38 !important;
+          }
 
-  /* Ajusta a cor do texto nos blocos de código/cURL */
-  .scalar-api-reference .code-block, 
-  .scalar-api-reference .curl {
-    color: #E8BA38 !important;
-  }
+          /* Ajusta a cor do texto nos blocos de código/cURL */
+          .scalar-api-reference .code-block, 
+          .scalar-api-reference .curl {
+            color: #E8BA38 !important;
+          }
 
-  /* Remove o título duplicado do Scalar */
-  .section-header { display: none; } 
-`
+          /* Remove o título duplicado do Scalar */
+          .section-header { display: none; } 
+      `
     }
     document.getElementById('api-reference').dataset.configuration = JSON.stringify(configuration);
   </script>
-
+  
   <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
 </body>
 </html>
